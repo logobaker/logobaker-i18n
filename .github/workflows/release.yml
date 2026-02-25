@@ -9,10 +9,28 @@ permissions:
   packages: write
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'chore(release):')"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci
+
+      - name: Validate translations
+        run: npm run validate
+
+      - name: Build
+        run: npm run build
+
   release:
     runs-on: ubuntu-latest
-    # Skip if the commit was made by the release bot (prevents infinite loop)
-    if: "!contains(github.event.head_commit.message, 'chore(release):')"
+    needs: validate
 
     steps:
       - uses: actions/checkout@v4
@@ -82,10 +100,8 @@ jobs:
           echo "Changelog:"
           cat /tmp/changelog.txt
 
-      - name: Validate and build
-        run: |
-          npm run validate
-          npm run build
+      - name: Build
+        run: npm run build
 
       - name: Commit version bump
         run: |

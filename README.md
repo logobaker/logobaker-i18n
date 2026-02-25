@@ -22,8 +22,9 @@ logobaker-i18n/
 │   └── validate.js           # Validates key consistency across locales
 ├── .github/
 │   └── workflows/
-│       ├── publish.yml        # Auto-publish on GitHub release
-│       └── validate.yml       # CI: validate on push/PR
+│       ├── release.yml        # Auto-release: validate → version bump → publish
+│       ├── publish.yml        # Manual fallback publish on GitHub release
+│       └── validate.yml       # CI: validate on pull requests
 ├── package.json
 ├── tsconfig.json
 └── .npmrc
