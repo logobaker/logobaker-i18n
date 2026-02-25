@@ -112,10 +112,26 @@ i18n.init({
 
 ## 🔖 Publishing a New Version
 
-1. Bump the version in `package.json`
-2. Commit and push to `main`
-3. Create a **GitHub Release** (e.g. `v1.1.0`)
-4. The `publish.yml` workflow will automatically publish to GitHub Packages
+Releases are **fully automated** based on [Conventional Commits](https://www.conventionalcommits.org/). Just push to `main` and the workflow handles versioning, tagging, GitHub Release creation, and npm publishing.
+
+### Commit format → version bump
+
+| Commit prefix | Example | Version bump |
+|---|---|---|
+| `fix:` | `fix: correct typo in uk locale` | **patch** (1.0.0 → 1.0.1) |
+| `feat:` | `feat: add German translations` | **minor** (1.0.0 → 1.1.0) |
+| `feat!:` or `BREAKING CHANGE:` | `feat!: restructure namespace keys` | **major** (1.0.0 → 2.0.0) |
+| anything else | `docs: update readme` | **patch** (1.0.0 → 1.0.1) |
+
+### Example workflow
+
+```bash
+# Add a new translation file
+git add locales/de/common.json
+git commit -m "feat: add German translations"
+git push origin main
+# → auto-releases v1.1.0 and publishes to GitHub Packages
+```
 
 ---
 

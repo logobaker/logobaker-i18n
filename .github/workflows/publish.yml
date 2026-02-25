@@ -1,5 +1,7 @@
-name: Publish Package
+name: Publish Package (Manual)
 
+# Manual fallback — only triggers on releases created manually via GitHub UI.
+# Automated releases from the release.yml workflow already publish the package.
 on:
   release:
     types: [created]
@@ -11,8 +13,12 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Skip if the release was created by the automated release workflow
+    if: github.event.release.author.login != 'github-actions[bot]'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - uses: actions/setup-node@v4
         with:
