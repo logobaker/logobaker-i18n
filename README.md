@@ -17,16 +17,15 @@ Quick summary:
 
 ## 📦 Installation
 
-### 1. Authenticate with GitHub Packages
+### 1. Configure the registry
 
-Create a `.npmrc` in your consuming project (or in `~/.npmrc`):
+Create a `.npmrc` in your project root (or globally in `~/.npmrc`):
 
 ```
 @logobaker:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
 ```
 
-> Generate a token at **GitHub → Settings → Developer settings → Personal access tokens** with `read:packages` scope.
+> This tells npm to fetch `@logobaker/*` packages from GitHub Packages instead of npmjs.com. No authentication token is required for public packages.
 
 ### 2. Install
 
