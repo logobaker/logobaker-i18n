@@ -2,33 +2,18 @@
 
 Shared i18n translation files for LogoBaker applications.
 
-Published as a GitHub npm package for use across:
-- **Node.js API** (backend)
-- **Angular** (frontend)
-- **React Native** (mobile)
+## 🤝 Contributing
 
-## 📁 Project Structure
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full guide.
 
-```
-logobaker-i18n/
-├── locales/                  # Translation JSON files (shipped with package)
-│   ├── en/
-│   │   └── common.json
-│   └── uk/
-│       └── common.json
-├── src/
-│   └── index.ts              # Helper utilities (Node.js)
-├── scripts/
-│   └── validate.js           # Validates key consistency across locales
-├── .github/
-│   └── workflows/
-│       ├── release.yml        # Auto-release: validate → version bump → publish
-│       ├── publish.yml        # Manual fallback publish on GitHub release
-│       └── validate.yml       # CI: validate on pull requests
-├── package.json
-├── tsconfig.json
-└── .npmrc
-```
+Quick summary:
+1. Fork & clone the repo
+2. Create a branch (`git checkout -b feat/add-german-translations`)
+3. Make your changes and run `npm run validate`
+4. Commit using [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `feat: add German translations`)
+5. Open a Pull Request against `main`
+
+---
 
 ## 📦 Installation
 
