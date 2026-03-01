@@ -2,17 +2,17 @@
  * Validates that all locale directories have the same JSON files
  * and that all JSON files have the same key structure.
  */
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 
 const LOCALES_DIR = path.resolve(__dirname, '..', 'locales');
 
-function getKeys(obj, prefix = '') {
-  let keys = [];
+function getKeys(obj: Record<string, unknown>, prefix = ''): string[] {
+  let keys: string[] = [];
   for (const key of Object.keys(obj).sort()) {
     const fullKey = prefix ? `${prefix}.${key}` : key;
     if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
-      keys = keys.concat(getKeys(obj[key], fullKey));
+      keys = keys.concat(getKeys(obj[key] as Record<string, unknown>, fullKey));
     } else {
       keys.push(fullKey);
     }
@@ -20,7 +20,7 @@ function getKeys(obj, prefix = '') {
   return keys;
 }
 
-function validate() {
+function validate(): void {
   const locales = fs
     .readdirSync(LOCALES_DIR)
     .filter((f) => fs.statSync(path.join(LOCALES_DIR, f)).isDirectory());
@@ -33,7 +33,7 @@ function validate() {
   console.log(`Found locales: ${locales.join(', ')}\n`);
 
   // Gather all namespace files per locale
-  const localeFiles = {};
+  const localeFiles: Record<string, string[]> = {};
   for (const locale of locales) {
     const dir = path.join(LOCALES_DIR, locale);
     localeFiles[locale] = fs
@@ -65,7 +65,7 @@ function validate() {
   for (const file of referenceFiles) {
     const referenceContent = JSON.parse(
       fs.readFileSync(path.join(LOCALES_DIR, referenceLocale, file), 'utf-8')
-    );
+    ) as Record<string, unknown>;
     const referenceKeys = getKeys(referenceContent);
 
     for (const locale of locales) {
@@ -74,7 +74,9 @@ function validate() {
       const filePath = path.join(LOCALES_DIR, locale, file);
       if (!fs.existsSync(filePath)) continue;
 
-      const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      const content = JSON.parse(
+        fs.readFileSync(filePath, 'utf-8')
+      ) as Record<string, unknown>;
       const keys = getKeys(content);
 
       const missingKeys = referenceKeys.filter((k) => !keys.includes(k));
@@ -90,7 +92,6 @@ function validate() {
       }
     }
 
-    // Validate JSON is parseable (already done above, but double-check)
     console.log(`✅ ${file} — keys consistent across all locales`);
   }
 

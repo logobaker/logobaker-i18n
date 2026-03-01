@@ -15,7 +15,7 @@ export const DEFAULT_LOCALE: Locale = 'en';
  * Useful for tools like i18next-fs-backend in Node.js APIs.
  */
 export function getLocalesPath(): string {
-  return path.resolve(__dirname, '..', 'locales');
+  return path.resolve(__dirname, 'locales');
 }
 
 /**

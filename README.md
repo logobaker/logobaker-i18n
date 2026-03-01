@@ -19,13 +19,16 @@ Quick summary:
 
 ### 1. Configure the registry
 
-Create a `.npmrc` in your project root (or globally in `~/.npmrc`):
+Add to your project's `.npmrc` (or globally in `~/.npmrc`):
 
 ```
 @logobaker:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
 ```
 
-> This tells npm to fetch `@logobaker/*` packages from GitHub Packages instead of npmjs.com. No authentication token is required for public packages.
+> **How to get a token:** Go to [GitHub → Settings → Developer settings → Personal access tokens (classic)](https://github.com/settings/tokens) and create a token with the **`read:packages`** scope.
+>
+> ⚠️ GitHub Packages requires authentication even for public packages. To avoid committing your token, add it to your **global** `~/.npmrc` instead of the project-level file.
 
 ### 2. Install
 
@@ -58,15 +61,15 @@ const localesPath = getLocalesPath();
 import { getLocalesPath } from '@logobaker/logobaker-i18n';
 
 // Or import JSON directly:
-import en from '@logobaker/logobaker-i18n/locales/en/common.json';
-import uk from '@logobaker/logobaker-i18n/locales/uk/common.json';
+import en from '@logobaker/logobaker-i18n/dist/locales/en/common.json';
+import uk from '@logobaker/logobaker-i18n/dist/locales/uk/common.json';
 ```
 
 ### React Native (with i18next / react-i18next)
 
 ```typescript
-import en from '@logobaker/logobaker-i18n/locales/en/common.json';
-import uk from '@logobaker/logobaker-i18n/locales/uk/common.json';
+import en from '@logobaker/logobaker-i18n/dist/locales/en/common.json';
+import uk from '@logobaker/logobaker-i18n/dist/locales/uk/common.json';
 
 i18n.init({
   resources: {
